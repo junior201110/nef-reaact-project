@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 # React Tutorial
@@ -53,3 +54,7 @@ You can change the port number by setting the `$PORT` environment variable befor
 ```sh
 PORT=3001 node server.js
 ```
+=======
+# nef-reaact-project
+A simple react example
+>>>>>>> 772c6797658ba218cceea243f3b00e91e57bd741
