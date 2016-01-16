@@ -1,0 +1,1 @@
+arquivo public/build/bundle.js modificado em %s\n Sáb Jan 16 02:27:08 BRST 2016
