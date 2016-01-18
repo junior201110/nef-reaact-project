@@ -1,4 +1,8 @@
 import React from 'react';
+import FloatActionButton from 'material-ui/lib/floating-action-button';
+const FAB = () => (
+  <FloatActionButton label="+" />
+);
 var Component = React.createClass({
   render:function(){
     return(
@@ -7,3 +11,4 @@ var Component = React.createClass({
   }
 });
 export default Component;
+export default FAB;

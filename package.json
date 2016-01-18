@@ -1,11 +1,9 @@
 {
   "name": "react-tutorial",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "php server.php",
-    "build": "browserify src > public/build/bundle.js",
-    "watch": "watchify js/main.js -o js/findem.js"
+    "test": "php build.php"
   },
   "babel": {
     "presets": [
@@ -16,13 +14,16 @@
   "description": "Code from the React tutorial.",
   "main": "server.js",
   "dependencies": {
+    "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
     "body-parser": "^1.4.3",
     "express": "4.4.5",
+    "material-ui": "^0.14.2",
     "react": "^0.14.6",
+    "react-addons-css-transition-group": "^0.14.6",
     "react-dom": "^0.14.6",
-    "requirejs": "^2.1.22"
+    "react-tap-event-plugin": "^0.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.0.0"

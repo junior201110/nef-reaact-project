@@ -1,0 +1,4 @@
+[Dom Jan 17 20:36:56 BRST 2016]
+  File public/build/bundle.js was built in public/build
+[Dom Jan 17 21:21:43 BRST 2016]
+  File public/build/bundle.js was built in public/build
