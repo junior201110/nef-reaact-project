@@ -7,7 +7,6 @@
 
 ::(status: ainda não testado)
 
-
 ::resultado da compilacao
 set output="public/build"
 
@@ -26,18 +25,11 @@ set now=%ltd%;
 ::arquivo de saida compilado
 set outputFile="bundle.js"
 
-::cores do terminal()
-::set success="$(tput setaf 2)"
-::set error="$(tput setaf 1)"
-::set info="$(tput setaf 4)"
-::set reset=`tput sgr0`
-::set cont=0;
+::cores
+set success="0a"
+set error="0c"
+set info="01"
 
-:: (ver como o windows utiliza o esquema de cores no cmd)
-set success=""
-set error=""
-set info=""
-set reset=""
 
 ::conta o tamanho do arquivo de log em bytes
 FOR /F "usebackq" %%A IN ('%log%') DO set logsize=%%~zA
@@ -61,13 +53,18 @@ if %cont% > 200 (
 
 ::Verifica se o diretorio  de entrada é válido
 if not exist %input% (
-  echo "+-----------------------------------------+"
-  echo "+%error% Directory %input% not found in current dir!%{reset}% +"
-  echo "+%info% See %log% for more details %{reset}%    +"
-  echo "+-----------------------------------------+"
-  echo "[%now%] - %logsize%
-  It is necessary that the directory <%input%> is set up so that
-  the watchify compile the code to <%output%>" >> %log%
+  echo +-----------------------------------------+
+  
+  call :ColorText %error% "+ Directory %input% not found in current dir! +"
+  echo(  
+
+  call :ColorText %info% "+ See %log% for more details    +"
+  echo(
+
+  echo +-----------------------------------------+
+  echo [%now%] - %logsize%
+  echo It is necessary that the directory ^<%input%^> is set up so that
+  echo the watchify compile the code to ^<%output%^> >> %log%
   exit
 )
 
@@ -79,14 +76,19 @@ if not exist %output% (
 ::Caso o diretório de entrada e saída estiverem OK ele builda os arquivos
 ::de entrada para a pasta de saída em um único arquivo,.
 if exist %input% (
-  echo "+--------------------------------------------+"
-  echo "+%success% Build project from <%input%> to <%output%>%{reset}% +"
-  echo "+--------------------------------------------+"
+  echo +--------------------------------------------+
+ 
+  call :ColorText %success% "+Build project from ^<%input%^> to ^<%output%^>+"
+  echo(
+
+  echo +--------------------------------------------+
   watchify -t [ babelify --presets [ react ] ] %input%/*.jsx -o %output%/%outputFile% -d -w |
 
-  echo "[%now%]
-  File %output%/%outputFile% was built in %output%" >> %log%
+  echo [%now%]
+  echo File %output%/%outputFile% was built in %output% >> %log%
 )
+
+goto :eof
 
 
 ::subrotina que cria um simples dialog yes/no
@@ -99,3 +101,12 @@ set message=%~1
 echo wscript.echo msgbox(WScript.Arguments(0),%MsgType%,WScript.Arguments(1)) >"%temp%\input.vbs"
 for /f "tokens=* delims=" %%a in ('cscript //nologo "%temp%\input.vbs" "%message%" "%heading%"') do set YesNo=%%a
 exit /b
+
+
+::subrotina que muda a cor do texto
+:ColorText
+echo off
+<nul set /p ".=%DEL%" > "%~2"
+findstr /v /a:%1 /R "^$" "%~2" nul
+del "%~2" > nul 2>&1
+goto :eof
