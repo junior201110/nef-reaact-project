@@ -5,6 +5,9 @@
 ::deve ser executado em outra janela do terminal junto com
 ::o servidor.
 
+::(status: ainda não testado)
+
+
 ::resultado da compilacao
 set output="public/build"
 
@@ -44,17 +47,17 @@ for /f %%a in ('type "%log%"^|find "" /v /c') do set /a cont=%%a
 
 if %cont% > 200 (
 
-::(ver como o windows utiliza um dialog)  
-    dialog --title "Clear File" \
-    --backtitle "Build - React" \
-    --yesno "The %log% have more than 200 line.Are you want clear this log ? [ESC to cancel]" 7 60
-    response=$?
-    case $response in
-       0) echo "file is clear";echo"">%log%;;
-       1) echo "not clear";;
-       255) echo "[operation was canceled]"; exit;;
-    esac
-)
+  Call :YesNoBox "The %log% have more than 200 line.Are you want clear this log ?" "Clear File"
+  if "%YesNo%"=="7" (
+    echo file is clear
+    echo. 2> %log%
+  )
+
+  if "%YesNo%"=="6" (
+    echo not clear
+  )  
+
+)  
 
 ::Verifica se o diretorio  de entrada é válido
 if not exist %input% (
@@ -84,3 +87,15 @@ if exist %input% (
   echo "[%now%]
   File %output%/%outputFile% was built in %output%" >> %log%
 )
+
+
+::subrotina que cria um simples dialog yes/no
+:YesNoBox
+REM returns 6 = Yes, 7 = No. Type=4 = Yes/No
+set YesNo=
+set MsgType=4
+set heading=%~2
+set message=%~1
+echo wscript.echo msgbox(WScript.Arguments(0),%MsgType%,WScript.Arguments(1)) >"%temp%\input.vbs"
+for /f "tokens=* delims=" %%a in ('cscript //nologo "%temp%\input.vbs" "%message%" "%heading%"') do set YesNo=%%a
+exit /b
