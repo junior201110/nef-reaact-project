@@ -5,31 +5,46 @@
 ::deve ser executado em outra janela do terminal junto com
 ::o servidor.
 
+::resultado da compilacao
 set output="public/build"
+
+::pasta onde os scripts serao lidos e compilados
 set input="src"
-::set date="%Y-%m-%d-%H:%M";
+
+::arquivo de log
 set log="build.log.txt"
 
+::pega a data e o horário atual atual
 for /F "usebackq tokens=1,2 delims==" %%i in (`wmic os get LocalDateTime /VALUE 2^>NUL`) do if '.%%i.'=='.LocalDateTime.' set ldt=%%j
 set ldt=%ldt:~0,4%-%ldt:~4,2%-%ldt:~6,2%-%ldt:~8,2%:%ldt:~10,2%
 
 set now=%ltd%;
-::set logsize="$(du -hsb $log)"
-set outputFile="bundle.js"
-set success="$(tput setaf 2)"
-set error="$(tput setaf 1)"
-set info="$(tput setaf 4)"
-set reset=`tput sgr0`
-set cont=0;
 
+::arquivo de saida compilado
+set outputFile="bundle.js"
+
+::cores do terminal()
+::set success="$(tput setaf 2)"
+::set error="$(tput setaf 1)"
+::set info="$(tput setaf 4)"
+::set reset=`tput sgr0`
+::set cont=0;
+
+:: (ver como o windows utiliza o esquema de cores no cmd)
+set success=""
+set error=""
+set info=""
+set reset=""
+
+::conta o tamanho do arquivo de log em bytes
 FOR /F "usebackq" %%A IN ('%log%') DO set logsize=%%~zA
 
-while  read file ; do
-   let cont=$cont+1;
-done < %log%;
+::conta a quantidade de linhas do arquivo de log
+for /f %%a in ('type "%log%"^|find "" /v /c') do set /a cont=%%a
 
 if %cont% > 200 (
-  
+
+::(ver como o windows utiliza um dialog)  
     dialog --title "Clear File" \
     --backtitle "Build - React" \
     --yesno "The %log% have more than 200 line.Are you want clear this log ? [ESC to cancel]" 7 60
