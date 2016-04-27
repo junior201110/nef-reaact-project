@@ -1,4 +1,5 @@
-#Arquivo usdo para compilar os arquivos jsx/js
+#!/usr/bin/env bash
+#Arquivo usado para compilar os arquivos jsx/js
 #para js nativo e ser usado no index.html ou qualquer outro
 #deve ser executado em outra janela do terminal junto com
 #o servidor.
@@ -15,7 +16,7 @@ error="$(tput setaf 1)";
 info="$(tput setaf 4)";
 reset=`tput sgr0`
 cont=0;
-
+watch='';
 while  read file ; do
    let cont=$cont+1;
 done < $log;
@@ -54,7 +55,7 @@ if [ -d "$input" ]; then
   echo "+$success Build project from <$input> to <$output>${reset} +"
   echo "+--------------------------------------------+"
   watchify -t [ babelify --presets [ react ] ] $input/*.jsx -o $output/$outputFile -d -w |
-
+echo $args
   echo "[$now]
   File $output/$outputFile was built in $output" >> $log
 fi

@@ -12,25 +12,25 @@
  */
 $scriptInvokedFromCli =
     isset($_SERVER['argv'][0]) && $_SERVER['argv'][0] === 'server.php';
-  $build = 'public/build';
-if(!is_dir($build)){
-  mkdir($build);
-}
+  //$build = 'public/build';
+// if(!is_dir($build)){
+//   mkdir($build);
+// }
 if($scriptInvokedFromCli) {
     $port = getenv('PORT');
     if (empty($port)) {
-        $port = "3000";
+        $port = "8080";
     }
     //system('./build.sh');
     echo 'starting server on port '. $port . PHP_EOL;
-    exec('php -S localhost:'. $port . ' -t public server.php');
+    exec('php -S 192.168.1.4:'. $port . ' -t public server.php');
 } else {
     return routeRequest();
 }
 
 function routeRequest()
 {
-    system('./build.js');
+    //system('./build.js');
     $comments = file_get_contents('comments.json');
     $uri = $_SERVER['REQUEST_URI'];
     if ($uri == '/') {

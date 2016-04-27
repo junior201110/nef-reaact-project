@@ -2,7 +2,7 @@
   "name": "react-tutorial",
   "version": "0.0.1",
   "scripts": {
-    "start": "php server.php",
+    "start": "node server.js",
     "test": "php build.php"
   },
   "babel": {
@@ -19,6 +19,7 @@
     "babelify": "^7.2.0",
     "body-parser": "^1.4.3",
     "express": "4.4.5",
+    "marked": "^0.3.5",
     "material-ui": "^0.14.2",
     "react": "^0.14.6",
     "react-addons-css-transition-group": "^0.14.6",
@@ -28,21 +29,6 @@
   "devDependencies": {
     "babel-cli": "^6.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/reactjs/react-tutorial.git"
-  },
-  "keywords": [
-    "react",
-    "tutorial",
-    "comment",
-    "example"
-  ],
-  "author": "petehunt",
-  "bugs": {
-    "url": "https://github.com/reactjs/react-tutorial/issues"
-  },
-  "homepage": "https://github.com/reactjs/react-tutorial",
   "engines": {
     "node": "5.x"
   }
